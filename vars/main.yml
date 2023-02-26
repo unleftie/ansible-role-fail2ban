@@ -15,7 +15,7 @@ fail2ban_bantime_formula: "ban.Time * (1<<(ban.Count if ban.Count<20 else 20)) *
 fail2ban_bantime_overalljails: false
 fail2ban_bantime_rndtime: 4000
 
-fail2ban_backend: "auto"
+fail2ban_backend: "systemd"
 fail2ban_destemail: "root@localhost"
 fail2ban_banaction: "iptables-multiport"
 fail2ban_banaction_allports: "iptables-allports"
