@@ -1,11 +1,14 @@
 # Role for Fail2ban setup
 
+[![Ansible CI](https://github.com/unleftie/ansible-role-fail2ban/actions/workflows/ansible-ci.yml/badge.svg)](https://github.com/unleftie/ansible-role-fail2ban/actions/workflows/ansible-ci.yml)
+[![Checkmarx KICS](https://github.com/unleftie/ansible-role-fail2ban/actions/workflows/checkmarx-kics.yml/badge.svg)](https://github.com/unleftie/ansible-role-fail2ban/actions/workflows/checkmarx-kics.yml)
+
 ## Compatibility
 
 | Platform   | Version |
 | ---------- | ------- |
 | debian     | 11      |
-| el (rocky) | 9       |
+| el (rocky) | 8       |
 | ubuntu     | 22.04   |
 
 ## Dependencies
