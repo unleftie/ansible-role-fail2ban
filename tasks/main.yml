@@ -1,1 +1,71 @@
 ---
+- import_tasks: assert.yml
+  run_once: true
+  delegate_to: localhost
+
+- name: Ensure Amazon repositories are enabled
+  shell: "amazon-linux-extras enable epel -y"
+  args:
+    executable: /bin/bash
+  changed_when: false
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution == "Amazon"
+    - ansible_distribution_major_version == "2"
+
+- name: Ensure epel package are installed
+  yum:
+    name: epel-release
+  register: result
+  retries: 6
+  until: result is successful
+  delay: 10
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure dependencies are installed
+  package:
+    name:
+      - fail2ban
+      - iptables
+    state: present
+
+- name: Check version
+  shell: fail2ban-server -V
+  args:
+    executable: /bin/bash
+  changed_when: false
+  register: _fail2ban_version_raw
+
+- name: Register version
+  set_fact:
+    fail2ban_version: "{{ _fail2ban_version_raw.stdout | regex_search('([0-9]+\\.[0-9]+\\.[0-9]+)') }}"
+  changed_when: false
+
+- name: Remove additional configuration files
+  file:
+    state: absent
+    path: "/etc/fail2ban/jail.d/"
+  notify: restart_fail2ban
+
+- name: Update fail2ban.local file
+  template:
+    src: fail2ban.local.j2
+    dest: "/etc/fail2ban/fail2ban.local"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_fail2ban
+
+- name: Update jail.local file
+  template:
+    src: jail.local.j2
+    dest: "/etc/fail2ban/jail.local"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_fail2ban
+
+- name: Ensure service enabled
+  systemd:
+    name: fail2ban
+    enabled: true

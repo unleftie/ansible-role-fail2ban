@@ -1,0 +1,12 @@
+---
+service:
+  fail2ban.service:
+    enabled: true
+    running: true
+process:
+  fail2ban-server:
+    running: true
+command:
+  version:
+    exit-status: 0
+    exec: "fail2ban-server status sshd"

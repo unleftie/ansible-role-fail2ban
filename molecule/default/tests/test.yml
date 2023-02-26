@@ -1,5 +1,0 @@
----
-command:
-  uptime:
-    exit-status: 0
-    exec: "uptime"

@@ -1,0 +1,71 @@
+[DEFAULT]
+
+{% if fail2ban_version is version('0.11.1', '>=') %}
+bantime.increment = {{ fail2ban_bantime_increment | bool | to_json }}
+{% if fail2ban_bantime_rndtime is defined %}
+bantime.rndtime = {{ fail2ban_bantime_rndtime }}
+{% endif %}
+{% if fail2ban_bantime_maxtime is defined %}
+bantime.maxtime = {{ fail2ban_bantime_maxtime }}
+{% endif %}
+bantime.factor = {{ fail2ban_bantime_factor }}
+{% if fail2ban_bantime_multipliers is not defined %}
+bantime.formula = {{ fail2ban_bantime_formula }}
+{% endif %}
+{% if fail2ban_bantime_multipliers is defined %}
+bantime.multipliers = {{ fail2ban_bantime_multipliers }}
+{% endif %}
+bantime.overalljails = {{ fail2ban_bantime_overalljails | bool | to_json }}
+{% endif %}
+
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host
+ignoreip = {{ fail2ban_ignoreips | join(' ') }}
+bantime  = {{ fail2ban_bantime }}
+maxretry = {{ fail2ban_maxretry }}
+findtime = {{ fail2ban_findtime }}
+
+backend = {{ fail2ban_backend }}
+
+destemail = {{ fail2ban_destemail }}
+sendername = {{ fail2ban_sendername }}
+{% if fail2ban_sender is defined %}
+sender = {{ fail2ban_sender }}
+{% endif %}
+
+banaction = {{ fail2ban_banaction }}
+banaction_allports = {{ fail2ban_banaction_allports }}
+
+mta = {{ fail2ban_mta }}
+
+# Default protocol
+protocol = {{ fail2ban_protocol }}
+
+# Specify chain where jumps would need to be added in iptables-* actions
+chain = {{ fail2ban_chain }}
+
+# Action shortcuts. To be used to define action parameter
+
+# The simplest action to take: ban only
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+# ban & send an e-mail with whois report to the destemail.
+action_mw = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+              %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s", protocol="%(protocol)s", chain="%(chain)s"]
+
+# ban & send an e-mail with whois report and relevant log lines
+# to the destemail.
+action_mwl = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
+               %(mta)s-whois-lines[name=%(__name__)s, dest="%(destemail)s", logpath=%(logpath)s, chain="%(chain)s"]
+
+action = {{ fail2ban_action }}
+
+{% for service in fail2ban_services %}
+[{{ service.name }}]
+enabled = {{ service.enabled | default(true) | bool | to_json }}
+{% for option, value in service.items() | sort %}
+{% if option not in ['name', 'enabled'] %}
+{{ option }} = {{ value }}
+{% endif %}
+{% endfor %}
+
+{% endfor %}

@@ -1,0 +1,8 @@
+---
+- name: test if fail2ban_loglevel is set correctly
+  assert:
+    that:
+      - fail2ban_loglevel is defined
+      - fail2ban_loglevel is string
+      - fail2ban_loglevel in ["CRITICAL", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG"]
+    quiet: true
