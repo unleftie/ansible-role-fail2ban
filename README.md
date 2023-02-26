@@ -8,7 +8,7 @@
 | Platform   | Version |
 | ---------- | ------- |
 | debian     | 11      |
-| el (rocky) | 8       |
+| el (rocky) | 9       |
 | ubuntu     | 22.04   |
 
 ## Dependencies
