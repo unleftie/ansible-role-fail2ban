@@ -76,3 +76,7 @@ molecule test
 | `fail2ban_chain`                | Specifies the chain where jumps would need to be added in iptables-\* actions                   |
 | `fail2ban_action`               | An action defines several commands which are executed at different moments                      |
 | `fail2ban_services`             | Name of the service to be used by the jail to detect matches                                    |
+
+## 📝 License
+
+This project is licensed under the [MIT](LICENSE).
