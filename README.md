@@ -47,7 +47,7 @@ molecule test
       when: ansible_os_family == "Debian"
   tasks:
     - include_role:
-        name: "fail2ban"
+        name: "ansible-role-fail2ban"
 ```
 
 ## Variables
