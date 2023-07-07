@@ -25,7 +25,6 @@
 ```sh
 git clone https://github.com/unleftie/ansible-role-fail2ban.git
 cd ansible-role-fail2ban/
-ansible-galaxy collection install -r requirements.yml
 molecule test
 ```
 
