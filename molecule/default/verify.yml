@@ -27,6 +27,7 @@
         name: github3.py
         register: _progress_status
         until: _progress_status is succeeded
+        delay: 3
         retries: 5
 
     - name: Get latest Goss release
@@ -57,6 +58,7 @@
           Authorization: "Bearer {{ lookup('env', 'GHA_TOKEN') }}"
       register: _progress_status
       until: _progress_status is succeeded
+      delay: 3
       retries: 5
 
     - name: Copy Goss tests to remote
