@@ -6,10 +6,10 @@
 - name: Ensure epel package are installed
   yum:
     name: epel-release
-  register: result
-  retries: 6
-  until: result is successful
-  delay: 10
+  register: _progress_status
+  until: _progress_status is succeeded
+  delay: 5
+  retries: 5
   when: ansible_os_family == "RedHat"
 
 - name: Ensure dependencies are installed
@@ -20,7 +20,7 @@
     state: present
   register: _progress_status
   until: _progress_status is succeeded
-  delay: 3
+  delay: 5
   retries: 5
 
 - name: Check version
