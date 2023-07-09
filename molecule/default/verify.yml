@@ -25,6 +25,9 @@
     - name: Ensure dependencies are installed
       pip:
         name: github3.py
+        register: _progress_status
+        until: _progress_status is succeeded
+        retries: 5
 
     - name: Get latest Goss release
       block:

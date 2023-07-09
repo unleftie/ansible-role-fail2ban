@@ -3,16 +3,6 @@
   run_once: true
   delegate_to: localhost
 
-- name: Ensure Amazon repositories are enabled
-  shell: "amazon-linux-extras enable epel -y"
-  args:
-    executable: /bin/bash
-  changed_when: false
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution == "Amazon"
-    - ansible_distribution_major_version == "2"
-
 - name: Ensure epel package are installed
   yum:
     name: epel-release
@@ -28,6 +18,9 @@
       - fail2ban
       - iptables
     state: present
+  register: _progress_status
+  until: _progress_status is succeeded
+  retries: 5
 
 - name: Check version
   shell: fail2ban-server -V
