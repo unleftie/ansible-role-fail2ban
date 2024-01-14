@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   role_name: fail2ban
-  author: unleftie
+  author: denysrondaliev
   description: Role for Fail2ban setup
   company: ""
   license: "license (MIT)"
