@@ -89,7 +89,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Run Ansible Lint
-        uses: unleftie/ansible-lint-action@f6c9ea06aebdd94a4a7e0414d630fdb6832b1083 # v1.1.0
+        uses: unleftie/ansible-lint-action@cf335794c205ecc967496ad01cfa97629ee9bad2 # v1.2.2
 
   molecule:
     name: Ansible Molecule
