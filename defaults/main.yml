@@ -3,5 +3,7 @@ fail2ban_ignoreips:
   - "127.0.0.1/8"
   - "::1"
 
-fail2ban_maxretry: 8
+fail2ban_maxretry: 5
 fail2ban_findtime: 300
+
+fail2ban_logtarget: "SYSTEMD-JOURNAL"

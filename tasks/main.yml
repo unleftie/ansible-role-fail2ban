@@ -17,6 +17,8 @@
     name:
       - fail2ban
       - iptables
+      - python3-pyinotify
+      - python3-systemd
     state: present
   register: _progress_status
   until: _progress_status is succeeded
@@ -47,7 +49,7 @@
     dest: "/etc/fail2ban/fail2ban.local"
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify: restart_fail2ban
 
 - name: Update jail.local file
@@ -56,7 +58,7 @@
     dest: "/etc/fail2ban/jail.local"
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify: restart_fail2ban
 
 - name: Ensure service enabled

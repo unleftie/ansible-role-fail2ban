@@ -4,12 +4,13 @@ loglevel = {{ fail2ban_loglevel }}
 
 logtarget = {{ fail2ban_logtarget }}
 {% if fail2ban_logtarget == "SYSLOG" %}
-syslog-target = {{ fail2ban_syslog_target }}
-syslog-facility = {{ fail2ban_syslog_facility }}
+syslogsocket = {{ fail2ban_syslogsocket }}
 {% endif %}
 
 socket = {{ fail2ban_socket }}
 
 pidfile = {{ fail2ban_pidfile }}
+
+allowipv6 = {{ fail2ban_allowipv6 }}
 
 dbpurgeage = {{ fail2ban_dbpurgeage }}

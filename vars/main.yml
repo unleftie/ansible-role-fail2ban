@@ -1,11 +1,10 @@
 ---
 fail2ban_loglevel: "INFO"
-fail2ban_logtarget: "/var/log/fail2ban.log"
-fail2ban_syslog_target: "/var/log/fail2ban.log"
-fail2ban_syslog_facility: 1
+fail2ban_syslogsocket: "auto"
+fail2ban_allowipv6: "auto"
 fail2ban_socket: "/var/run/fail2ban/fail2ban.sock"
 fail2ban_pidfile: "/var/run/fail2ban/fail2ban.pid"
-fail2ban_dbpurgeage: 86400
+fail2ban_dbpurgeage: "1d"
 fail2ban_sendername: "fail2ban"
 
 fail2ban_bantime: 1800
@@ -26,3 +25,5 @@ fail2ban_action: "%(action_)s"
 
 fail2ban_services:
   - name: "sshd"
+    logpath: "%(sshd_log)s"
+    backend: "%(sshd_backend)s"
