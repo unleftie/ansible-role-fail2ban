@@ -9,4 +9,32 @@ process:
 command:
   version:
     exit-status: 0
+    exec: "systemctl is-active fail2ban"
+    stdout: ["active"]
+  jail:
+    exit-status: 0
+    exec: "fail2ban-server status"
+    stdout: ["Number of jail:"]
+  sshd:
+    exit-status: 0
     exec: "fail2ban-server status sshd"
+    stdout: ["Status for the jail: sshd"]
+file:
+  /etc/fail2ban/jail.local:
+    exists: true
+    mode: "0640"
+    owner: root
+    group: root
+    filetype: file
+  /etc/fail2ban/fail2ban.local:
+    exists: true
+    mode: "0640"
+    owner: root
+    group: root
+    filetype: file
+  {{ fail2ban_socket }}:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+    filetype: socket

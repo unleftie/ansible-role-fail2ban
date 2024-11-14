@@ -72,16 +72,3 @@
   systemd:
     name: fail2ban
     enabled: true
-
-- name: Check if fail2ban is running
-  shell: systemctl is-active fail2ban
-  args:
-    executable: /bin/bash
-  register: fail2ban_status
-  changed_when: false
-  failed_when: false
-
-- name: Fail if fail2ban is not running
-  fail:
-    msg: "Fail2ban service is not running."
-  when: fail2ban_status.stdout != "active"
