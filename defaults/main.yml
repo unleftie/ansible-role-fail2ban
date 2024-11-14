@@ -5,5 +5,3 @@ fail2ban_ignoreips:
 
 fail2ban_maxretry: 5
 fail2ban_findtime: 300
-
-fail2ban_logtarget: "SYSTEMD-JOURNAL"

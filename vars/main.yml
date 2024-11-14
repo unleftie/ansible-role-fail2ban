@@ -1,4 +1,7 @@
 ---
+# this value will be overridden for older Debian versions
+fail2ban_logtarget: "SYSTEMD-JOURNAL"
+
 fail2ban_loglevel: "INFO"
 fail2ban_syslogsocket: "auto"
 fail2ban_allowipv6: "auto"

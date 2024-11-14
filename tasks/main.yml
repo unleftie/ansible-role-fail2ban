@@ -25,6 +25,13 @@
   delay: 5
   retries: 5
 
+- name: Override log target for older Debian versions
+  set_fact:
+    fail2ban_logtarget: "SYSLOG"
+  when:
+    - ansible_distribution == "Debian"
+    - ansible_distribution_major_version in ["10", "11"]
+
 - name: Check version
   shell: fail2ban-server -V
   args:
@@ -65,3 +72,16 @@
   systemd:
     name: fail2ban
     enabled: true
+
+- name: Check if fail2ban is running
+  shell: systemctl is-active fail2ban
+  args:
+    executable: /bin/bash
+  register: fail2ban_status
+  changed_when: false
+  failed_when: false
+
+- name: Fail if fail2ban is not running
+  fail:
+    msg: "Fail2ban service is not running."
+  when: fail2ban_status.stdout != "active"
