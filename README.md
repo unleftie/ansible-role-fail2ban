@@ -7,7 +7,7 @@
 
 | Platform | Version |
 | -------- | ------- |
-| debian   | 12      |
+| ubuntu   | 26.04   |
 
 ## Dependencies
 
@@ -24,27 +24,17 @@
 ```sh
 git clone https://github.com/unleftie/ansible-role-fail2ban.git
 cd ansible-role-fail2ban/
+ansible-galaxy install -r requirements.yml
 molecule test
 ```
 
 ## Installation
 
-> Upgradability notice: When upgrading from old version of this role, be aware that some files may be lost.
-
-```yml
-- name: Sample 1
-  hosts: all
-  become: true
-  pre_tasks:
-    - name: Ensure apt cache are updated
-      apt:
-        update_cache: true
-        cache_valid_time: 3600
-      when: ansible_os_family == "Debian"
-  tasks:
-    - include_role:
-        name: "ansible-role-fail2ban"
+```sh
+ansible-galaxy install -r requirements.yml
 ```
+
+Example [playbook](main.yml)
 
 ## 📝 License
 
