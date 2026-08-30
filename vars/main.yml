@@ -7,7 +7,8 @@ fail2ban_syslogsocket: "auto"
 fail2ban_allowipv6: "auto"
 fail2ban_socket: "/var/run/fail2ban/fail2ban.sock"
 fail2ban_pidfile: "/var/run/fail2ban/fail2ban.pid"
-fail2ban_dbpurgeage: "1d"
+# keep ban history at least as long as the longest possible ban (bantime.maxtime)
+fail2ban_dbpurgeage: "{{ fail2ban_bantime_maxtime }}"
 fail2ban_sendername: "fail2ban"
 
 fail2ban_bantime: 1800
@@ -16,6 +17,7 @@ fail2ban_bantime_factor: 1
 fail2ban_bantime_formula: "ban.Time * (1<<(ban.Count if ban.Count<20 else 20)) * banFactor"
 fail2ban_bantime_overalljails: false
 fail2ban_bantime_rndtime: 4000
+fail2ban_bantime_maxtime: "4w"
 
 fail2ban_backend: "systemd"
 fail2ban_destemail: "root@localhost"
@@ -28,5 +30,6 @@ fail2ban_action: "%(action_)s"
 
 fail2ban_services:
   - name: "sshd"
+    port: "{{ fail2ban_sshd_port }}"
     logpath: "%(sshd_log)s"
     backend: "%(sshd_backend)s"
